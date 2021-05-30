@@ -1,0 +1,67 @@
+﻿@model IEnumerable<Rocky.Models.Product>
+
+
+
+<br />
+<br />
+<form method="post">
+
+    <div class="container">
+        <div class="bg-dark text-white col-12 p-3 rounded">
+            <div class="d-flex justify-content-between">
+                <div class="p-2">
+                    <i class="fa fa-shopping-cart" aria-hidden="true"></i> &nbsp;
+                    Shopping Cart
+                </div>
+
+                <div class="p-2">
+                    <a asp-action="Index" asp-controller="Home" class="badge badge-info p-3">
+                        Continue Shopping
+                    </a>
+                </div>
+            </div>
+        </div>
+        <br />
+
+        <table class="table table-bordered table-hover">
+            <thead>
+                <tr class="d-flex">
+                    <td class="col-7">
+                        Product Details
+                    </td>
+                    <td class="col-5" colspan="2">
+                        Price
+                    </td>
+                </tr>
+            </thead>
+            <tbody class="">
+                @foreach (var item in Model)
+                {
+                    <tr class="d-flex">
+                        <td class="col-7">
+                            <img src="@WC.ImagePath@item.Image" class="w-25 img-thumbnail" />
+                            <span class="pl-2 h5">@item.Name</span>
+                        </td>
+                        <td class="col-4">
+                            $ @item.Price
+                        </td>
+                        <td class="col-1 text-center">
+                            <a class="btn btn-outline-danger " asp-action="Remove" asp-route-id="@item.Id">
+                                <i class="fa fa-trash " aria-hidden="true"></i>
+                            </a>
+                        </td>
+                    </tr>
+
+                }
+            </tbody>
+            <tr class="table-secondary">
+                <td colspan="2">
+                    <button type="submit" class="btn btn-success pt-3 pb-3 pl-5 pr-5 float-right">Continue</button>
+                </td>
+            </tr>
+        </table>
+
+
+    </div>
+
+</form>

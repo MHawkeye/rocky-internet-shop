@@ -1,0 +1,27 @@
+﻿@model Rocky.Models.ViewModels.DetailsVM
+
+    <form method="post">
+        <div class="container align-items-center">
+            <input asp-for="@Model.Product.Id" hidden /> 
+            <div class="col-8 text-center">
+                <div class="card">
+                    <h5 class="card-header"><span class="float-left">@Model.Product.Name</span> <span class="float-right">$ @Model.Product.Price</span></h5>
+                    <div class="card-body">
+                        <img src="@WC.ImagePath@Model.Product.Image" class="w-100 card-img" />
+                        <h5 class="card-title p-2">@Html.Raw(@Model.Product.Description)</h5>
+                        <a asp-action="Index" class="btn btn-secondary pt-2 pb-2 pl-4 pr-4">Back To List</a>
+
+                        @if (Model.ExistsInCart)
+                        {
+                            <a asp-action="RemoveFromCart" asp-route-id="@Model.Product.Id" class="btn btn-danger pt-2 pb-2 pl-4 pr-4">Remove from Cart</a>
+                        }
+                        else
+                        {
+                            <button type="submit" asp-route-id="@Model.Product.Id"  class="btn btn-info">Add To Cart</button>
+                        }
+                    </div>
+                </div>
+                <br />
+            </div>
+        </div>
+    </form>

@@ -1,0 +1,14 @@
+﻿@model Rocky.Models.Product
+
+<div class="col-4 filter @Model.Category.Name.Replace(' ','_')">
+    <div class="card">
+        <h5 class="card-header"><span class="float-left">@Model.Name</span> <span class="float-right">$ @Model.Price</span></h5>
+        <div class="card-body">
+            <img src="@WC.ImagePath@Model.Image" class="w-100 card-img"   />
+            <h6 class="card-title pt-2 pl-2">Category: @Model.Category.Name</h6>
+            <h5 class="card-title p-2">@Html.Raw(@Model.Description)</h5>
+            <a asp-action="Details" asp-route-id="@Model.Id" class="btn btn-primary">View Details</a>
+        </div>
+    </div>
+    <br />
+</div>

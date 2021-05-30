@@ -1,0 +1,44 @@
+﻿@model Rocky.Models.ViewModels.ProductUserVM
+@using Rocky.Models
+
+<form method="post" >
+    <div class="container row">
+        <div class="col-6">
+            <h3 class="text-info">PickUp Details</h3><br />
+            <div class="form-group">
+                <input asp-for="ApplicationUser.FullName" class="form-control" />
+                <span asp-validation-for="ApplicationUser.FullName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input asp-for="ApplicationUser.PhoneNumber" class="form-control" />
+                <span asp-validation-for="ApplicationUser.PhoneNumber" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input asp-for="ApplicationUser.Email" class="form-control" />
+                <span asp-validation-for="ApplicationUser.Email" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="col-6">
+            <h3 class="text-info">Order Summary</h3><br />
+            <ul class="list-group">
+                @for (int i=0; i<Model.ProductList.Count(); i++)
+                {
+                    <li>
+                        <input type="hidden" asp-for="@Model.ProductList[i].Id" />
+                        <input type="hidden" asp-for="@Model.ProductList[i].Name" />
+                        <input type="hidden" asp-for="@Model.ProductList[i].Price" />
+                    </li>
+
+                    <li class="list-group d-flex justify-content-between">
+                        <h6>@Model.ProductList[i].Name</h6>
+                        <p>$ @Model.ProductList[i].Price</p>
+                    </li>
+                }
+            </ul>
+        </div>
+        <button class="btn btn-success">Submit Orders</button>
+
+    </div>
+
+</form> 
