@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Rocky.Data;
-using Rocky.Models;
-using Rocky.Models.ViewModels;
+using Rocky_DataAccess.Data;
+using Rocky_Models;
+using Rocky_Models.ViewModels;
 using Rocky.Utility;
 using System;
 using System.Collections.Generic;
@@ -11,6 +11,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
+
 
 namespace Rocky.Controllers
 {
@@ -30,7 +31,7 @@ namespace Rocky.Controllers
             List<ShoppingCart> shoppingCartList = new List<ShoppingCart>();
 
             if (HttpContext.Session.Get<IEnumerable<ShoppingCart>>(WC.SessionCart) != null
-                && HttpContext.Session.Get<IEnumerable<ShoppingCart>>(WC.SessionCart).Count()>0)
+                && HttpContext.Session.Get<IEnumerable<ShoppingCart>>(WC.SessionCart).Any())
             {
                 shoppingCartList = HttpContext.Session.Get<List<ShoppingCart>>(WC.SessionCart);
             }
@@ -57,7 +58,7 @@ namespace Rocky.Controllers
             List<ShoppingCart> shoppingCartList = new List<ShoppingCart>();
 
             if (HttpContext.Session.Get<IEnumerable<ShoppingCart>>(WC.SessionCart) != null
-                && HttpContext.Session.Get<IEnumerable<ShoppingCart>>(WC.SessionCart).Count() > 0)
+                && HttpContext.Session.Get<IEnumerable<ShoppingCart>>(WC.SessionCart).Any() )
             {
                 shoppingCartList = HttpContext.Session.Get<List<ShoppingCart>>(WC.SessionCart);
             }
@@ -116,7 +117,7 @@ namespace Rocky.Controllers
             List<ShoppingCart> shoppingCartList = new List<ShoppingCart>();
 
             if (HttpContext.Session.Get<IEnumerable<ShoppingCart>>(WC.SessionCart) != null
-                && HttpContext.Session.Get<IEnumerable<ShoppingCart>>(WC.SessionCart).Count() > 0)
+                && HttpContext.Session.Get<IEnumerable<ShoppingCart>>(WC.SessionCart).Any() )
             {
                 shoppingCartList = HttpContext.Session.Get<List<ShoppingCart>>(WC.SessionCart);
             }
@@ -130,7 +131,7 @@ namespace Rocky.Controllers
 
             HttpContext.Session.Set(WC.SessionCart, shoppingCartList);
 
-            if (shoppingCartList.Count() > 0)
+            if (shoppingCartList.Count > 0)
             {
                 return RedirectToAction(nameof(Index));
             }

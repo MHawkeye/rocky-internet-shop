@@ -6,7 +6,9 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Rocky.Data;
+using Rocky_DataAccess.Data;
+using Rocky_DataAccess.Repository;
+using Rocky_DataAccess.Repository.IRepository;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -44,6 +46,8 @@ namespace Rocky
                 Options.Cookie.HttpOnly = true;
                 Options.Cookie.IsEssential = true;
             });
+
+            services.AddScoped<ICategoryRepository, CategoryRepository>();
             services.AddControllersWithViews();
         }
 

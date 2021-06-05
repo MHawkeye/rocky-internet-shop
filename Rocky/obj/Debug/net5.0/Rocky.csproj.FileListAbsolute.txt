@@ -431,7 +431,6 @@ C:\Users\MUKHAMMED\source\repos\Rocky\Rocky\bin\Debug\net5.0\refs\WindowsBase.dl
 C:\Users\MUKHAMMED\source\repos\Rocky\Rocky\bin\Debug\net5.0\Microsoft.AspNetCore.Mvc.Razor.Extensions.dll
 C:\Users\MUKHAMMED\source\repos\Rocky\Rocky\bin\Debug\net5.0\Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation.dll
 C:\Users\MUKHAMMED\source\repos\Rocky\Rocky\bin\Debug\net5.0\Microsoft.Extensions.DependencyModel.dll
-C:\Users\MUKHAMMED\source\repos\Rocky\Rocky\obj\Debug\net5.0\Rocky.MvcApplicationPartsAssemblyInfo.cs
 C:\Users\MUKHAMMED\source\repos\Rocky\Rocky\obj\Debug\net5.0\Razor\Views\Home\Details.cshtml.g.cs
 C:\Users\MUKHAMMED\source\repos\Rocky\Rocky\bin\Debug\net5.0\Rocky.StaticWebAssets.xml
 C:\Users\MUKHAMMED\source\repos\Rocky\Rocky\bin\Debug\net5.0\Microsoft.AspNetCore.Cryptography.Internal.dll
@@ -488,3 +487,15 @@ C:\Users\MUKHAMMED\source\repos\Rocky\Rocky\obj\Debug\net5.0\Razor\Views\Cart\Su
 C:\Users\MUKHAMMED\source\repos\Rocky\Rocky\bin\Debug\net5.0\MailKit.dll
 C:\Users\MUKHAMMED\source\repos\Rocky\Rocky\bin\Debug\net5.0\MimeKit.dll
 C:\Users\MUKHAMMED\source\repos\Rocky\Rocky\bin\Debug\net5.0\BouncyCastle.Crypto.dll
+C:\Users\MUKHAMMED\source\repos\Rocky\Rocky\bin\Debug\net5.0\Microsoft.AspNetCore.JsonPatch.dll
+C:\Users\MUKHAMMED\source\repos\Rocky\Rocky\bin\Debug\net5.0\Newtonsoft.Json.Bson.dll
+C:\Users\MUKHAMMED\source\repos\Rocky\Rocky\bin\Debug\net5.0\Rocky_Models.dll
+C:\Users\MUKHAMMED\source\repos\Rocky\Rocky\bin\Debug\net5.0\Rocky_Utility.dll
+C:\Users\MUKHAMMED\source\repos\Rocky\Rocky\bin\Debug\net5.0\Rocky_Utility.pdb
+C:\Users\MUKHAMMED\source\repos\Rocky\Rocky\bin\Debug\net5.0\Rocky_Models.pdb
+C:\Users\MUKHAMMED\source\repos\Rocky\Rocky\bin\Debug\net5.0\Rocky_DataAccess.dll
+C:\Users\MUKHAMMED\source\repos\Rocky\Rocky\bin\Debug\net5.0\Rocky_DataAccess.pdb
+C:\Users\MUKHAMMED\source\repos\Rocky\Rocky\obj\Debug\net5.0\Rocky.MvcApplicationPartsAssemblyInfo.cs
+C:\Users\MUKHAMMED\source\repos\Rocky\Rocky\bin\Debug\net5.0\Syncfusion.EJ2.dll
+C:\Users\MUKHAMMED\source\repos\Rocky\Rocky\bin\Debug\net5.0\Syncfusion.Licensing.dll
+C:\Users\MUKHAMMED\source\repos\Rocky\Rocky\obj\Debug\net5.0\Razor\Views\Home\Exa.cshtml.g.cs

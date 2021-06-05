@@ -8,10 +8,11 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - Rocky</title>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
     <link rel="stylesheet" href="~/css/site.css" />
     <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
     <link rel="stylesheet" href="~/css/font-awesome.min.css">
+    <link rel="stylesheet" href="~/lib/toastr/toastr.min.css" />
 
 </head>
 <body>
@@ -71,6 +72,7 @@
         </main>
     </div>
 
+
     <footer class="border-top footer text-muted">
         <div class="container">
             &copy; 2021 - Rocky - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
@@ -81,6 +83,11 @@
     <script src="~/js/site.js" asp-append-version="true"></script>
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
+    <script src="~/lib/toastr/toastr.min.js"></script>
     @await RenderSectionAsync("Scripts", required: false)
+
+
+
+
 </body>
 </html>

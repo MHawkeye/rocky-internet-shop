@@ -13,7 +13,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
-using Rocky.Models;
+using Rocky_Models;
 
 namespace Rocky.Areas.Identity.Pages.Account
 {
@@ -23,21 +23,18 @@ namespace Rocky.Areas.Identity.Pages.Account
         private readonly SignInManager<IdentityUser> _signInManager;
         private readonly UserManager<IdentityUser> _userManager;
         private readonly ILogger<RegisterModel> _logger;
-        private readonly IEmailSender _emailSender;
         private readonly RoleManager<IdentityRole> _roleManager;
 
         public RegisterModel(
             UserManager<IdentityUser> userManager,
             SignInManager<IdentityUser> signInManager,
             ILogger<RegisterModel> logger,
-            IEmailSender emailSender,
             RoleManager<IdentityRole> roleManager
             )
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _logger = logger;
-            _emailSender = emailSender;
             _roleManager = roleManager;
         }
 
@@ -93,14 +90,15 @@ namespace Rocky.Areas.Identity.Pages.Account
                 var result = await _userManager.CreateAsync(user, Input.Password);
                 if (result.Succeeded)
                 {
-                    if (User.IsInRole(WC.AdminRole))
-                    {
-                        await _userManager.AddToRoleAsync(user, WC.AdminRole);
-                    }
-                    else
-                    {
-                        await _userManager.AddToRoleAsync(user, WC.CustomerRole);
-                    }
+                    await _userManager.AddToRoleAsync(user, WC.AdminRole);
+                    //if (User.IsInRole(WC.AdminRole))
+                    //{
+                    //    await _userManager.AddToRoleAsync(user, WC.AdminRole);
+                    //}
+                    //else
+                    //{
+                    //    await _userManager.AddToRoleAsync(user, WC.CustomerRole);
+                    //}
                     _logger.LogInformation("User created a new account with password.");
 
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
@@ -108,20 +106,20 @@ namespace Rocky.Areas.Identity.Pages.Account
                     var callbackUrl = Url.Page(
                         "/Account/ConfirmEmail",
                         pageHandler: null,
-                        values: new { area = "Identity", userId = user.Id, code = code, returnUrl = returnUrl },
+                        values: new { area = "Identity", userId = user.Id, code, returnUrl },
                         protocol: Request.Scheme);
 
-                    EmailService emailService = new EmailService();
+                   // EmailService emailService = new EmailService();
 
-                    await emailService.SendEmailAsync(Input.Email, "Confirm your email",
-                        $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
+                    //await emailService.SendEmailAsync(Input.Email, "Confirm your email",
+                    //    $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
 
 /*                    await _emailSender.SendEmailAsync(Input.Email, "Confirm your email",
                         $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
 */
                     if (_userManager.Options.SignIn.RequireConfirmedAccount)
                     {
-                        return RedirectToPage("RegisterConfirmation", new { email = Input.Email, returnUrl = returnUrl });
+                        return RedirectToPage("RegisterConfirmation", new { email = Input.Email, returnUrl });
                     }
                     else
                     {

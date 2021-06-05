@@ -1,0 +1,8 @@
+C:\Users\MUKHAMMED\source\repos\Rocky\Rocky_Models\obj\Debug\netcoreapp3.1\Rocky_Models.AssemblyInfoInputs.cache
+C:\Users\MUKHAMMED\source\repos\Rocky\Rocky_Models\obj\Debug\netcoreapp3.1\Rocky_Models.AssemblyInfo.cs
+C:\Users\MUKHAMMED\source\repos\Rocky\Rocky_Models\obj\Debug\netcoreapp3.1\Rocky_Models.csproj.CoreCompileInputs.cache
+C:\Users\MUKHAMMED\source\repos\Rocky\Rocky_Models\bin\Debug\netcoreapp3.1\Rocky_Models.deps.json
+C:\Users\MUKHAMMED\source\repos\Rocky\Rocky_Models\bin\Debug\netcoreapp3.1\Rocky_Models.dll
+C:\Users\MUKHAMMED\source\repos\Rocky\Rocky_Models\bin\Debug\netcoreapp3.1\Rocky_Models.pdb
+C:\Users\MUKHAMMED\source\repos\Rocky\Rocky_Models\obj\Debug\netcoreapp3.1\Rocky_Models.dll
+C:\Users\MUKHAMMED\source\repos\Rocky\Rocky_Models\obj\Debug\netcoreapp3.1\Rocky_Models.pdb

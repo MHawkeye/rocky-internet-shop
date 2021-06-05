@@ -2,9 +2,9 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using Rocky.Data;
-using Rocky.Models;
-using Rocky.Models.ViewModels;
+using Rocky_DataAccess.Data;
+using Rocky_Models;
+using Rocky_Models.ViewModels;
 using Rocky.Utility;
 using System;
 using System.Collections.Generic;
@@ -42,7 +42,7 @@ namespace Rocky.Controllers
             List<ShoppingCart> shoppingCartList = new List<ShoppingCart>();
 
             if (HttpContext.Session.Get<IEnumerable<ShoppingCart>>(WC.SessionCart) != null
-                && HttpContext.Session.Get<IEnumerable<ShoppingCart>>(WC.SessionCart).Count() > 0)
+                && HttpContext.Session.Get<IEnumerable<ShoppingCart>>(WC.SessionCart).Any())
             {
                 shoppingCartList = HttpContext.Session.Get<List<ShoppingCart>>(WC.SessionCart);
             }
@@ -69,7 +69,7 @@ namespace Rocky.Controllers
             List<ShoppingCart> shoppingCartList = new List<ShoppingCart>();
 
             if (HttpContext.Session.Get<IEnumerable<ShoppingCart>>(WC.SessionCart) != null
-                && HttpContext.Session.Get<IEnumerable<ShoppingCart>>(WC.SessionCart).Count()>0)
+                && HttpContext.Session.Get<IEnumerable<ShoppingCart>>(WC.SessionCart).Any())
             {
                 shoppingCartList = HttpContext.Session.Get<List<ShoppingCart>>(WC.SessionCart);
             }
@@ -84,7 +84,7 @@ namespace Rocky.Controllers
             List<ShoppingCart> shoppingCartList = new List<ShoppingCart>();
 
             if (HttpContext.Session.Get<IEnumerable<ShoppingCart>>(WC.SessionCart) != null
-                && HttpContext.Session.Get<IEnumerable<ShoppingCart>>(WC.SessionCart).Count() > 0)
+                && HttpContext.Session.Get<IEnumerable<ShoppingCart>>(WC.SessionCart).Any())
             {
                 shoppingCartList = HttpContext.Session.Get<List<ShoppingCart>>(WC.SessionCart);
             }
