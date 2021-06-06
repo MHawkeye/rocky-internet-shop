@@ -19,5 +19,9 @@ namespace Rocky_DataAccess.Data
         public DbSet<Category> Category{ get; set; }
 
         public DbSet<Product> Product { get; set; }
+
+        public DbSet<InquiryHeader> InquiryHeader { get; set; }
+
+        public DbSet<InquiryDetail> InquiryDetail { get; set; }
     }
 }

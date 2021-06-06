@@ -1,30 +1,39 @@
 ﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Rocky_DataAccess.Data;
 using Rocky_Models;
 using Rocky_Models.ViewModels;
-using Rocky.Utility;
+using Rocky_Utility;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
-
+using Microsoft.AspNetCore.Http;
+using Rocky_DataAccess.Repository.IRepository;
 
 namespace Rocky.Controllers
 {
     [Authorize]
     public class CartController : Controller
     {
-        private readonly ApplicationDbContext _db;
+        private readonly IProductRepository _prodRepo;
+        private readonly IApplicationUserRepository _userRepo;
+        private readonly IInquiryHeaderRepository _inqHRepo;
+        private readonly IInquiryDetailRepository _inqDRepo;
+
         [BindProperty]
         public ProductUserVM ProductUserVM { get; set; }
 
-        public CartController(ApplicationDbContext db)
+        public CartController(IProductRepository prodRepo, IApplicationUserRepository userRepo,
+                              IInquiryHeaderRepository inqHRepo, IInquiryDetailRepository inqDRepo)
         {
-            _db = db;
+            _prodRepo = prodRepo;
+            _userRepo = userRepo;
+            _inqDRepo = inqDRepo;
+            _inqHRepo = inqHRepo;
+            
         }
         public IActionResult Index()
         {
@@ -38,7 +47,7 @@ namespace Rocky.Controllers
 
             List<int> prodInCart = shoppingCartList.Select(i => i.ProductId).ToList();
 
-            IEnumerable<Product> productList = _db.Product.Where(p => prodInCart.Contains(p.Id));
+            IEnumerable<Product> productList = _prodRepo.GetAll(p => prodInCart.Contains(p.Id));
 
             return View(productList);
         }
@@ -58,18 +67,18 @@ namespace Rocky.Controllers
             List<ShoppingCart> shoppingCartList = new List<ShoppingCart>();
 
             if (HttpContext.Session.Get<IEnumerable<ShoppingCart>>(WC.SessionCart) != null
-                && HttpContext.Session.Get<IEnumerable<ShoppingCart>>(WC.SessionCart).Any() )
+                && HttpContext.Session.Get<IEnumerable<ShoppingCart>>(WC.SessionCart).Any())
             {
                 shoppingCartList = HttpContext.Session.Get<List<ShoppingCart>>(WC.SessionCart);
             }
 
             List<int> prodInCart = shoppingCartList.Select(i => i.ProductId).ToList();
 
-            IEnumerable<Product> productList = _db.Product.Where(p => prodInCart.Contains(p.Id));
+            IEnumerable<Product> productList = _prodRepo.GetAll(p => prodInCart.Contains(p.Id));
 
             ProductUserVM = new ProductUserVM()
             {
-                ApplicationUser = _db.ApplicationUser.FirstOrDefault(u => u.Id == claim.Value),
+                ApplicationUser = _userRepo.FirstOrDefault(u => u.Id == claim.Value),
                 ProductList = productList.ToList()
             };
 
@@ -80,33 +89,41 @@ namespace Rocky.Controllers
         [HttpPost]
         public async Task<IActionResult> Summary(ProductUserVM productUserVM)
         {
-            EmailService emailService = new EmailService();
+            var claimsIdentity = (ClaimsIdentity)User.Identity;
+            var claim = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier);
 
             List<string> prod = new List<string>();
 
-            foreach(var item in productUserVM.ProductList)
+            foreach (var item in productUserVM.ProductList)
             {
                 prod.Add("Order:" +
                     "ID:" + item.Id + " Name:" + item.Name + " Price:" + item.Price);
-                    ;
+                ;
             }
 
-            switch (prod.Count)
+            InquiryHeader inquiryHeader = new InquiryHeader()
             {
-                case 1:
-                    await emailService.SendEmailAsync("kzylbayev.mukhammed@gmail.com", "Order", ProductUserVM.ApplicationUser.Email+"/n"+ prod[0]+"<br/>");
-                    break;
+                ApplicationUserId = claim.Value,
+                FullName = productUserVM.ApplicationUser.FullName,
+                Email = productUserVM.ApplicationUser.Email,
+                PhoneNumber = productUserVM.ApplicationUser.PhoneNumber,
+                InquiryDate = DateTime.Now
+            };
 
-                case 2:
-                    await emailService.SendEmailAsync("kzylbayev.mukhammed@gmail.com", "Order", ProductUserVM.ApplicationUser.Email + prod[0]+" " +prod[1] + "<br/>");
-                    break;
-                case 3:
-                    await emailService.SendEmailAsync("kzylbayev.mukhammed@gmail.com", "Order", ProductUserVM.ApplicationUser.Email + prod[0] + " " + prod[1] + " " + prod[2] + "<br/>");
-                    break;
-                case 4:
-                    await emailService.SendEmailAsync("kzylbayev.mukhammed@gmail.com", "Order", ProductUserVM.ApplicationUser.Email + prod[0] + " " + prod[1] + " " + prod[2] + " " + prod[3] + "<br/>");
-                    break;
+            _inqHRepo.Add(inquiryHeader);
+            _inqHRepo.Save();
+
+            foreach(var pr in productUserVM.ProductList)
+            {
+                InquiryDetail inquiryDetail = new InquiryDetail()
+                {
+                    InquiryHeaderId = inquiryHeader.Id,
+                    ProductId = pr.Id
+                };
+
+                _inqDRepo.Add(inquiryDetail);
             }
+            _inqDRepo.Save();
 
             return RedirectToAction(nameof(Index));
         }
@@ -116,13 +133,15 @@ namespace Rocky.Controllers
         {
             List<ShoppingCart> shoppingCartList = new List<ShoppingCart>();
 
-            if (HttpContext.Session.Get<IEnumerable<ShoppingCart>>(WC.SessionCart) != null
-                && HttpContext.Session.Get<IEnumerable<ShoppingCart>>(WC.SessionCart).Any() )
+            if (HttpContext.Session.Get<IEnumerable<ShoppingCart>>(WC.SessionCart) != null)
+                
+//                Get<IEnumerable<ShoppingCart>>(WC.SessionCart) != null
+//                && HttpContext.Session.Get<IEnumerable<ShoppingCart>>(WC.SessionCart).Any())
             {
                 shoppingCartList = HttpContext.Session.Get<List<ShoppingCart>>(WC.SessionCart);
             }
 
-            var removeToCartList = shoppingCartList.SingleOrDefault(i=>i.ProductId == id);
+            var removeToCartList = shoppingCartList.SingleOrDefault(i => i.ProductId == id);
 
             if (removeToCartList != null)
             {

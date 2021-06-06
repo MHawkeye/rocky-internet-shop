@@ -7,7 +7,7 @@
                 <div class="card">
                     <h5 class="card-header"><span class="float-left">@Model.Product.Name</span> <span class="float-right">$ @Model.Product.Price</span></h5>
                     <div class="card-body">
-                        <img src="@WC.ImagePath@Model.Product.Image" class="w-100 card-img" />
+                        <img src="@Rocky_Utility.WC.ImagePath@Model.Product.Image" class="w-100 card-img" />
                         <h5 class="card-title p-2">@Html.Raw(@Model.Product.Description)</h5>
                         <a asp-action="Index" class="btn btn-secondary pt-2 pb-2 pl-4 pr-4">Back To List</a>
 

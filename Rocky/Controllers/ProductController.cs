@@ -4,8 +4,10 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Rocky_DataAccess.Data;
+using Rocky_DataAccess.Repository.IRepository;
 using Rocky_Models;
 using Rocky_Models.ViewModels;
+using Rocky_Utility;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -17,16 +19,18 @@ namespace Rocky.Controllers
     [Authorize(Roles = WC.AdminRole)]
     public class ProductController : Controller
     {
-        private readonly ApplicationDbContext _db;
+        private readonly IProductRepository _prodRepo;
         private readonly IWebHostEnvironment _webHostEnvironment; 
-        public ProductController(ApplicationDbContext db, IWebHostEnvironment webHostEnvironment)
+        public ProductController(IProductRepository prodRepo, IWebHostEnvironment webHostEnvironment)
         {
-            _db = db;
+            _prodRepo = prodRepo;
             _webHostEnvironment = webHostEnvironment;
         }
         public IActionResult Index()
         {
-            IEnumerable<Product> objList = _db.Product.Include(p=>p.Category);
+            IEnumerable<Product> objList = _prodRepo.GetAll(includeProperties: "Category");
+                
+                //_db.Product.Include(p=>p.Category);
             return View(objList);
         }
 
@@ -43,11 +47,7 @@ namespace Rocky.Controllers
             ProductVM productVM = new ProductVM()
             {
                 Product = new Product(),
-                CategorySelectList = _db.Category.Select(i => new SelectListItem
-                {
-                    Text = i.Name,
-                    Value = i.Id.ToString()
-                })
+                CategorySelectList = _prodRepo.GetAllDropdownList(WC.CategoryName)
             };
 
             if (id == null)
@@ -56,8 +56,8 @@ namespace Rocky.Controllers
             }
             else
             {
-//                productVM.Product = _db.Product.Find(id);
-                productVM.Product = _db.Product.Find(id);
+                //                productVM.Product = _db.Product.Find(id);
+                productVM.Product = _prodRepo.Find(id.GetValueOrDefault());
                 if (productVM.Product == null)
                 {
                     return NotFound();
@@ -88,11 +88,12 @@ namespace Rocky.Controllers
 
                     productVM.Product.Image = fileName + extension;
 
-                    _db.Product.Add(productVM.Product);
+                    _prodRepo.Add(productVM.Product);
                 }
                 else
                 {
-                    var objFromDb = _db.Product.AsNoTracking().FirstOrDefault(u => u.Id == productVM.Product.Id);
+                    var objFromDb = _prodRepo.FirstOrDefault(u => u.Id == productVM.Product.Id, isTracking: false); 
+                        //_db.Product.AsNoTracking().FirstOrDefault(u => u.Id == productVM.Product.Id);
                     if (files.Count > 0)
                     {
                         string upload = webRootPath + WC.ImagePath;
@@ -118,19 +119,17 @@ namespace Rocky.Controllers
                         productVM.Product.Image = objFromDb.Image;
                     }
 
-                    _db.Product.Update(productVM.Product);
+                    _prodRepo.Update(productVM.Product);
+//                    _db.Product.Update(productVM.Product);
 
                 }
 
-                _db.SaveChanges();
+                _prodRepo.Save();
+ //               _db.SaveChanges();
                 return RedirectToAction("Index");
 
             }
-            productVM.CategorySelectList = _db.Category.Select(i => new SelectListItem
-            {
-                Text = i.Name,
-                Value = i.Id.ToString()
-            });
+            productVM.CategorySelectList = _prodRepo.GetAllDropdownList(WC.CategoryName);
 
             return View(productVM);
         }
@@ -146,14 +145,10 @@ namespace Rocky.Controllers
                 ProductVM productVM = new ProductVM()
                 {
                     Product = new Product(),
-                    CategorySelectList = _db.Category.Select(i => new SelectListItem
-                    {
-                        Text = i.Name,
-                        Value = i.Id.ToString()
-                    })
+                    CategorySelectList = _prodRepo.GetAllDropdownList(WC.CategoryName)
                 };
 
-                productVM.Product = _db.Product.Find(id);
+                productVM.Product = _prodRepo.Find(id.GetValueOrDefault());
 
                 if (productVM.Product.Id > 0)
                 {
@@ -177,7 +172,7 @@ namespace Rocky.Controllers
 
             else
             {
-                var obj = _db.Product.Find(id);
+                var obj = _prodRepo.Find(id.GetValueOrDefault());
 
                 string upload = _webHostEnvironment.WebRootPath + WC.ImagePath;
                 var oldFile = Path.Combine(upload, obj.Image);
@@ -187,9 +182,9 @@ namespace Rocky.Controllers
                     System.IO.File.Delete(oldFile);
                 }
 
-                _db.Remove(obj);
+                _prodRepo.Remove(obj);
 
-                _db.SaveChanges();
+                _prodRepo.Save();
                 return RedirectToAction("Index");
             }
         }

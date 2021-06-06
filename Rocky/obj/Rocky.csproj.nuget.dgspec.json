@@ -99,6 +99,10 @@
             "Syncfusion.EJ2.AspNet.Core": {
               "target": "Package",
               "version": "[19.1.0.66, )"
+            },
+            "System.Runtime": {
+              "target": "Package",
+              "version": "[4.3.1, )"
             }
           },
           "imports": [
@@ -149,6 +153,9 @@
             "projectReferences": {
               "C:\\Users\\MUKHAMMED\\source\\repos\\Rocky\\Rocky_Models\\Rocky_Models.csproj": {
                 "projectPath": "C:\\Users\\MUKHAMMED\\source\\repos\\Rocky\\Rocky_Models\\Rocky_Models.csproj"
+              },
+              "C:\\Users\\MUKHAMMED\\source\\repos\\Rocky\\Rocky_Utility\\Rocky_Utility.csproj": {
+                "projectPath": "C:\\Users\\MUKHAMMED\\source\\repos\\Rocky\\Rocky_Utility\\Rocky_Utility.csproj"
               }
             }
           }
@@ -163,6 +170,14 @@
         "netcoreapp3.1": {
           "targetAlias": "netcoreapp3.1",
           "dependencies": {
+            "Microsoft.AspNetCore.Http": {
+              "target": "Package",
+              "version": "[2.2.2, )"
+            },
+            "Microsoft.AspNetCore.Http.Extensions": {
+              "target": "Package",
+              "version": "[2.2.0, )"
+            },
             "Microsoft.AspNetCore.Identity.EntityFrameworkCore": {
               "target": "Package",
               "version": "[5.0.6, )"
@@ -222,7 +237,11 @@
         "frameworks": {
           "netcoreapp3.1": {
             "targetAlias": "netcoreapp3.1",
-            "projectReferences": {}
+            "projectReferences": {
+              "C:\\Users\\MUKHAMMED\\source\\repos\\Rocky\\Rocky_Utility\\Rocky_Utility.csproj": {
+                "projectPath": "C:\\Users\\MUKHAMMED\\source\\repos\\Rocky\\Rocky_Utility\\Rocky_Utility.csproj"
+              }
+            }
           }
         },
         "warningProperties": {
@@ -246,6 +265,10 @@
             "Microsoft.AspNetCore.Mvc.ViewFeatures": {
               "target": "Package",
               "version": "[2.2.0, )"
+            },
+            "Microsoft.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[5.0.6, )"
             },
             "Microsoft.Extensions.Identity.Stores": {
               "target": "Package",
@@ -318,6 +341,10 @@
             "Microsoft.AspNetCore.Http.Extensions": {
               "target": "Package",
               "version": "[2.2.0, )"
+            },
+            "Microsoft.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[5.0.6, )"
             },
             "MimeKit": {
               "target": "Package",

@@ -1,0 +1,34 @@
+﻿var dataTable;
+
+
+$(document).ready(function () {
+    loadDataTable("GetInquiryList")
+});
+
+
+function loadDataTable() {
+    dataTable = $("#tblData").DataTable({
+        "ajax": {
+            "url": "/inquiry/GetInquiryList"
+        },
+        "columns": [
+            { "data": "id", "width": "10%" },
+            { "data": "fullName", "width": "10%" },
+            { "data": "phoneNumber", "width": "10%" },
+            { "data": "email", "width": "10%" },
+            {
+                "data": "id",
+                "render": function (data) {
+                    return `
+                        <div class="text-center">
+                            <a href="/Inquiry/Details/${data}" class="btn btn-success text-white" style="cursor:pointer">
+                                Edit
+                            </a>
+                        </div>
+                    `
+                },
+                "width": "5%"
+            }
+        ]
+    });
+}

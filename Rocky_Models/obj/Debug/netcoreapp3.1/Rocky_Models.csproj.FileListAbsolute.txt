@@ -6,3 +6,7 @@ C:\Users\MUKHAMMED\source\repos\Rocky\Rocky_Models\bin\Debug\netcoreapp3.1\Rocky
 C:\Users\MUKHAMMED\source\repos\Rocky\Rocky_Models\bin\Debug\netcoreapp3.1\Rocky_Models.pdb
 C:\Users\MUKHAMMED\source\repos\Rocky\Rocky_Models\obj\Debug\netcoreapp3.1\Rocky_Models.dll
 C:\Users\MUKHAMMED\source\repos\Rocky\Rocky_Models\obj\Debug\netcoreapp3.1\Rocky_Models.pdb
+C:\Users\MUKHAMMED\source\repos\Rocky\Rocky_Models\obj\Debug\netcoreapp3.1\Rocky_Models.csprojAssemblyReference.cache
+C:\Users\MUKHAMMED\source\repos\Rocky\Rocky_Models\bin\Debug\netcoreapp3.1\Rocky_Utility.dll
+C:\Users\MUKHAMMED\source\repos\Rocky\Rocky_Models\bin\Debug\netcoreapp3.1\Rocky_Utility.pdb
+C:\Users\MUKHAMMED\source\repos\Rocky\Rocky_Models\obj\Debug\netcoreapp3.1\Rocky_Models.csproj.CopyComplete

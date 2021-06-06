@@ -1,5 +1,6 @@
 ﻿@model Rocky_Models.Product
-
+@using Rocky_Utility
+ 
 <div class="col-4 filter @Model.Category.Name.Replace(' ','_')">
     <div class="card">
         <h5 class="card-header"><span class="float-left">@Model.Name</span> <span class="float-right">$ @Model.Price</span></h5>

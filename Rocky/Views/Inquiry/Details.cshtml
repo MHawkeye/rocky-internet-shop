@@ -1,0 +1,67 @@
+﻿@model Rocky_Models.ViewModels.InquiryVM
+
+<div class="bg-light mb-5">
+
+    <div class="container mb-5">
+        <div class="row bg-dark text-white rounded  ">
+            <div class="container d-flex justify-content-between">
+                <h5 class="p-2"><i class="fa fa-shopping-cart p-2" aria-hidden="true"></i>Order Summary</h5>
+                <a asp-action="Index" asp-controller="Inquiry" class="alert alert-primary text-decoration-none p-2 m-2">Back to Inquiry</a>
+            </div>
+        </div>
+        <h3 class="text-info p-3">PickUp Details</h3>
+        <form method="post" class="d-flex justify-content-between m-4">
+            <input asp-for="InquiryHeader.Id" type="hidden" />
+
+            <div class="col-5 ">
+                <div class="mb-2">
+                    <label asp-for="InquiryHeader.FullName" class="form-label"></label>
+                    <input asp-for="InquiryHeader.FullName" class="form-control" />
+                    <span asp-validation-for="InquiryHeader.FullName" class="text-danger"></span>
+                </div>
+
+                <div class="mb-2">
+                    <label asp-for="InquiryHeader.PhoneNumber" class="form-label"></label>
+                    <input asp-for="InquiryHeader.PhoneNumber" class="form-control" />
+                    <span asp-validation-for="InquiryHeader.PhoneNumber" class="text-danger"></span>
+                </div>
+
+                <div class="mb-2">
+                    <label asp-for="InquiryHeader.Email" class="form-label"></label>
+                    <input asp-for="InquiryHeader.Email" class="form-control" />
+                    <span asp-validation-for="InquiryHeader.Email" class="text-danger"></span>
+                </div>
+
+                <div class="mb-2">
+                    <label asp-for="InquiryHeader.InquiryDate" class="form-label"></label>
+                    <input asp-for="InquiryHeader.InquiryDate" disabled class="form-control" />
+                    <span asp-validation-for="InquiryHeader.InquiryDate" class="text-danger"></span>
+                </div>
+                <br />
+
+                <div class="d-flex justify-content-between">
+                    <button type="submit" class="btn btn-info w-50 m-1">Convert To Cart</button>
+                    <button type="submit" class="btn btn-danger w-50 m-1" formaction="/Inquiry/Delete/" formmethod="post">Delete</button>
+                </div>
+
+                <br />
+                <br />
+
+            </div>
+
+
+            <div class="col-5">
+                <h3>Order Summary</h3>
+                <ul class="list-group">
+                    @foreach (var pr in Model.InquiryDetail)
+                    {
+                        <li class="list-group-item">@pr.Product.Name</li>
+                        <li class="list-group-item">$@pr.Product.Price</li>
+                    }
+
+                </ul>
+            </div>
+
+        </form>
+    </div>
+</div>

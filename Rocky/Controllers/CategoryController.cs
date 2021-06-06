@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Rocky_Utility;
 
 namespace Rocky.Controllers
 {
@@ -39,9 +40,11 @@ namespace Rocky.Controllers
                 _catRepo.Add(category);
                 _catRepo.Save();
 
+                TempData[WC.Success] = "Category created successfully";
                 return RedirectToAction("Index");
             }
 
+            TempData[WC.Error] = "Error while creating category";
             return View(category);
         }
 
