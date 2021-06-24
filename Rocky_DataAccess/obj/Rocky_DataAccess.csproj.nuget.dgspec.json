@@ -207,6 +207,10 @@
         "netcoreapp3.1": {
           "targetAlias": "netcoreapp3.1",
           "dependencies": {
+            "Braintree": {
+              "target": "Package",
+              "version": "[5.7.0, )"
+            },
             "MailKit": {
               "target": "Package",
               "version": "[2.12.0, )"

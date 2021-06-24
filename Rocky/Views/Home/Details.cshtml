@@ -1,23 +1,36 @@
 ﻿@model Rocky_Models.ViewModels.DetailsVM
-
+@using Rocky_Utility 
     <form method="post">
         <div class="container align-items-center">
             <input asp-for="@Model.Product.Id" hidden /> 
             <div class="col-8 text-center">
                 <div class="card">
-                    <h5 class="card-header"><span class="float-left">@Model.Product.Name</span> <span class="float-right">$ @Model.Product.Price</span></h5>
+                    <h5 class="card-header">
+                        <span class="float-left">@Model.Product.Name</span> 
+                        <span class="float-right">$ @Model.Product.Price</span></h5>
                     <div class="card-body">
-                        <img src="@Rocky_Utility.WC.ImagePath@Model.Product.Image" class="w-100 card-img" />
+                        <img src="@Rocky_Utility.WC.ImagePath@Model.Product.Image" class="w-50 card-img" />
                         <h5 class="card-title p-2">@Html.Raw(@Model.Product.Description)</h5>
-                        <a asp-action="Index" class="btn btn-secondary pt-2 pb-2 pl-4 pr-4">Back To List</a>
+                        @if (User.IsInRole(WC.AdminRole))
+                        {
+                            @if (Model.ExistsInCart)
+                            {
+                                <input asp-for="@Model.Product.TempSqFt" disabled class="form-control m-3" />
+                            }
+                            else {
+                                <input asp-for="@Model.Product.TempSqFt" class="form-control m-3" />
+                            }
+                        }
+
+                        <a asp-action="Index" class="btn btn-secondary ">К списку</a>
 
                         @if (Model.ExistsInCart)
                         {
-                            <a asp-action="RemoveFromCart" asp-route-id="@Model.Product.Id" class="btn btn-danger pt-2 pb-2 pl-4 pr-4">Remove from Cart</a>
+                            <a asp-action="RemoveFromCart" asp-route-id="@Model.Product.Id" class="btn btn-danger">Удалить из списка</a>
                         }
                         else
                         {
-                            <button type="submit" asp-route-id="@Model.Product.Id"  class="btn btn-info">Add To Cart</button>
+                            <button type="submit" asp-route-id="@Model.Product.Id" class="btn btn-info">Добавить покупку</button>
                         }
                     </div>
                 </div>

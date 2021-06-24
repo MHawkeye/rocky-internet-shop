@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Rocky_Models.Product>
+﻿@model List<Rocky_Models.Product>
 @using Rocky_Utility
 
 
@@ -11,42 +11,82 @@
             <div class="d-flex justify-content-between">
                 <div class="p-2">
                     <i class="fa fa-shopping-cart" aria-hidden="true"></i> &nbsp;
-                    Shopping Cart
+                    Корзина покупок
                 </div>
 
                 <div class="p-2">
-                    <a asp-action="Index" asp-controller="Home" class="badge badge-info p-3">
-                        Continue Shopping
+                    <a asp-action="Index" asp-controller="Home" class="nav-link text-white-50">
+                        Продолжить покупки
                     </a>
                 </div>
             </div>
         </div>
         <br />
 
-        <table class="table table-bordered table-hover">
+        <table class="table bg-white p-0 m-0">
             <thead>
-                <tr class="d-flex">
-                    <td class="col-7">
-                        Product Details
+                <tr class="">
+                    <td class="col-5">
+                        Детали покупки
                     </td>
-                    <td class="col-5" colspan="2">
-                        Price
-                    </td>
+                    @if (User.IsInRole(WC.AdminRole))
+                    {
+                        <td class="col-2">
+                            Цена за ед.
+                        </td>
+                        <td class="col-2">
+                            Количество
+                        </td>
+                        <td class="col-3" colspan="2">
+                            Общая сумма
+                        </td>
+                    }
+                    else
+                    {
+                        <td class="col-5" colspan="2">
+                            Price
+                        </td>
+
+                    }
                 </tr>
             </thead>
             <tbody class="">
-                @foreach (var item in Model)
+                @{
+                    var total = 0.0;
+                }
+                @for (int item = 0; item < Model.Count(); item++)
                 {
-                    <tr class="d-flex">
-                        <td class="col-7">
-                            <img src="@WC.ImagePath@item.Image" class="w-25 img-thumbnail" />
-                            <span class="pl-2 h5">@item.Name</span>
+                    <input hidden asp-for="@Model[item].Id" />
+
+                    <tr class="">
+                        <td class="col-5">
+                            <img src="@WC.ImagePath@Model[item].Image" class="w-25 img-thumbnail" />
+                            <span class="pl-2 h5">@Model[item].Name</span>
                         </td>
-                        <td class="col-4">
-                            $ @item.Price
-                        </td>
+                        @if (User.IsInRole(WC.AdminRole))
+                        {
+                            <td class="col-2 ">
+                                @Model[item].Price
+                            </td>
+                            <td class="col-2">
+                                <input asp-for="@Model[item].TempSqFt" class="form-control" />
+                            </td>
+                            <td class="col-2">
+                                $ @(Model[item].Price* Model[item].TempSqFt)
+                            </td>
+
+                        }
+                        else
+                        {
+                            <td class="col-4">
+                                $ @Model[item].Price
+                            </td>
+                        }
+                        @{
+                            total += Model[item].Price * Model[item].TempSqFt;
+                        }
                         <td class="col-1 text-center">
-                            <a class="btn btn-outline-danger " asp-action="Remove" asp-route-id="@item.Id">
+                            <a class="btn btn-outline-danger " asp-action="Remove" asp-route-id="@Model[item].Id">
                                 <i class="fa fa-trash " aria-hidden="true"></i>
                             </a>
                         </td>
@@ -54,14 +94,38 @@
 
                 }
             </tbody>
-            <tr class="table-secondary">
-                <td colspan="2">
-                    <button type="submit" class="btn btn-success pt-3 pb-3 pl-5 pr-5 float-right">Continue</button>
-                </td>
-            </tr>
         </table>
 
+        @if (User.IsInRole(WC.AdminRole))
+        {
 
+            <div class="container-fluid bg-white pb-3">
+                <div class="col-2 offset-10">
+                    <p class="p-2">Итого: $@total</p>
+                </div>
+                <div class="row col-10 offset-2">
+                    <div class="col-4 ">
+                        <button type="submit" class="btn btn-primary w-100" formaction="/Cart/Updated/" formmethod="post">Изменить</button>
+                    </div>
+                    <div class="col-4">
+                        <button type="submit" class="btn btn-success w-100">Продолжить</button>
+                    </div>
+
+                </div>
+            </div>
+
+        }
+        else
+        {
+            <div class="container-fluid bg-white pb-3">
+                <div class="col-2 offset-10">
+                    <p class="p-2">Итого: $@total</p>
+                </div>
+                <div class="col-2 offset-10 ">
+                    <button type="submit" class="btn btn-success w-100">Continue</button>
+                </div>
+            </div>
+        }
     </div>
 
 </form>

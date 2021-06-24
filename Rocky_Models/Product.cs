@@ -9,6 +9,10 @@ namespace Rocky_Models
 {
     public class Product
     {
+        public Product()
+        {
+            TempSqFt = 1;
+        }
         [Key]
         public int Id { get; set; }
         [Required]
@@ -22,5 +26,9 @@ namespace Rocky_Models
         public int CategoryId { get; set; }
         [ForeignKey("CategoryId")]
         public virtual Category Category  { get; set; }
+
+        [NotMapped]    
+        [Range(1,10000)]
+        public int TempSqFt { get; set; }
     }
 }

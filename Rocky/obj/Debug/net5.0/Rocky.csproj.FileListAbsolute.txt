@@ -502,3 +502,6 @@ C:\Users\MUKHAMMED\source\repos\Rocky\Rocky\obj\Debug\net5.0\Razor\Views\Home\Ex
 C:\Users\MUKHAMMED\source\repos\Rocky\Rocky\obj\Debug\net5.0\Razor\Views\Inquiry\Index.cshtml.g.cs
 C:\Users\MUKHAMMED\source\repos\Rocky\Rocky\obj\Debug\net5.0\Razor\Views\Inquiry\Details.cshtml.g.cs
 C:\Users\MUKHAMMED\source\repos\Rocky\Rocky\obj\Debug\net5.0\Razor\Views\Shared\_Notifications.cshtml.g.cs
+C:\Users\MUKHAMMED\source\repos\Rocky\Rocky\obj\Debug\net5.0\Razor\Views\Cart\InquiryConfirmation.cshtml.g.cs
+C:\Users\MUKHAMMED\source\repos\Rocky\Rocky\bin\Debug\net5.0\Braintree.dll
+C:\Users\MUKHAMMED\source\repos\Rocky\Rocky\bin\Debug\net5.0\System.Xml.XPath.XmlDocument.dll

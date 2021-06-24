@@ -1,44 +1,123 @@
 ﻿@model Rocky_Models.ViewModels.ProductUserVM
-@using Rocky_Models
+@using Rocky_Utility
 
-<form method="post" >
+<form method="post" id="payment-form">
     <div class="container row">
         <div class="col-6">
             <h3 class="text-info">PickUp Details</h3><br />
             <div class="form-group">
+                <label asp-for="ApplicationUser.FullName" class="form-label"></label>
                 <input asp-for="ApplicationUser.FullName" class="form-control" />
                 <span asp-validation-for="ApplicationUser.FullName" class="text-danger"></span>
             </div>
             <div class="form-group">
+                <label asp-for="ApplicationUser.PhoneNumber" class="form-label"></label>
                 <input asp-for="ApplicationUser.PhoneNumber" class="form-control" />
                 <span asp-validation-for="ApplicationUser.PhoneNumber" class="text-danger"></span>
             </div>
             <div class="form-group">
+                <label asp-for="ApplicationUser.Email" class="form-label"></label>
                 <input asp-for="ApplicationUser.Email" class="form-control" />
                 <span asp-validation-for="ApplicationUser.Email" class="text-danger"></span>
             </div>
+            <div class="form-group">
+                <label asp-for="ApplicationUser.StreetAddress" class="form-label"></label>
+                <input asp-for="ApplicationUser.StreetAddress" class="form-control" />
+                <span asp-validation-for="ApplicationUser.StreetAddress" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ApplicationUser.City" class="form-label"></label>
+                <input asp-for="ApplicationUser.City" class="form-control" />
+                <span asp-validation-for="ApplicationUser.City" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ApplicationUser.State" class="form-label"></label>
+                <input asp-for="ApplicationUser.State" class="form-control" />
+                <span asp-validation-for="ApplicationUser.State" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ApplicationUser.PostalCode" class="form-label"></label>
+                <input asp-for="ApplicationUser.PostalCode" class="form-control" />
+                <span asp-validation-for="ApplicationUser.PostalCode" class="text-danger"></span>
+            </div>
+
+            <br />
         </div>
 
         <div class="col-6">
             <h3 class="text-info">Order Summary</h3><br />
-            <ul class="list-group">
-                @for (int i=0; i<Model.ProductList.Count(); i++)
+            <ul class="list-group list-unstyled">
+                @for (int i = 0; i < Model.ProductList.Count(); i++)
                 {
-                    <li>
+                    <li class="">
                         <input type="hidden" asp-for="@Model.ProductList[i].Id" />
                         <input type="hidden" asp-for="@Model.ProductList[i].Name" />
                         <input type="hidden" asp-for="@Model.ProductList[i].Price" />
+                        <input type="hidden" asp-for="@Model.ProductList[i].TempSqFt" />
                     </li>
 
-                    <li class="list-group d-flex justify-content-between">
+                    <li class="list-group-item m-2">
                         <h6>@Model.ProductList[i].Name</h6>
-                        <p>$ @Model.ProductList[i].Price</p>
+                        <p>Price: $ @Model.ProductList[i].Price  </p>
+                        <p>Cout: @Model.ProductList[i].TempSqFt</p>
+                        <p>Total: @(Model.ProductList[i].TempSqFt*Model.ProductList[i].Price)</p>
                     </li>
+
                 }
             </ul>
+
+            <br />
+
+            <div class="col-12">
+                @if (User.IsInRole(WC.AdminRole))
+                {
+                    <div class="row">
+                        <div class="container">
+                            <div id="dropin-container">
+
+                            </div>
+                            <input id="nonce" name="payment_method_nonce" type="hidden" />
+                        </div>
+                    </div>
+                }
+            </div>
+
+            <br />
         </div>
-        <button class="btn btn-success">Submit Orders</button>
+        
 
-    </div>
+            <button class="btn btn-success">Submit Orders</button>
 
-</form> 
+        </div>
+
+</form>
+
+
+
+<script src="https://js.braintreegateway.com/web/dropin/1.30.0/js/dropin.min.js"></script>
+<script>
+    const form = document.getElementById('payment-form');
+
+    braintree.dropin.create({
+        authorization: "@ViewBag.ClientToken",
+        container: '#dropin-container'
+    }, (error, dropinInstance) => {
+        if (error) console.error(error);
+
+        form.addEventListener('submit', event => {
+            event.preventDefault();
+
+            dropinInstance.requestPaymentMethod((error, payload) => {
+                if (error) console.error(error);
+
+                // Step four: when the user is ready to complete their
+                //   transaction, use the dropinInstance to get a payment
+                //   method nonce for the user's selected payment method, then add
+                //   it a the hidden field before submitting the complete form to
+                //   a server-side integration
+                document.getElementById('nonce').value = payload.nonce;
+                form.submit();
+            });
+        });
+    });
+</script>
